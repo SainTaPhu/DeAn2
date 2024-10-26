@@ -1,0 +1,25 @@
+{% comment %} <!-- Cap2App/templates/Cap2App/upload.html -->
+<h2>Upload CSV File</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form> {% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tải lên tệp CSV</title>
+</head>
+<body>
+    <h1>Tải lên tệp CSV</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Tải lên</button>
+    </form>
+</body>
+</html>
+
