@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Detail</title>
+</head>
+<body>
+  <h1>Chi tiết file CSV: {{ csv_file.file_path|slice:"9:" }}</h1>
+
+  <table border="1">
+    {% for row in data %}
+      <tr>
+        {% for cell in row %}
+          <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+
+  <a href="{% url 'csv_list' %}">Quay về danh sách file</a>
+</body>
+</html>

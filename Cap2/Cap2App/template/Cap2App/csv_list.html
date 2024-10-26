@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách file CSV</title>
+</head>
+<body>
+  <h1>Danh sách file CSV</h1>
+
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Tên file</th>
+      <th>Đường dẫn</th>
+      <th>Ngày tải lên</th>
+    </tr>
+    {% for file in csv_files %}
+      <tr>
+        <!-- Link vào ID để chuyển hướng đến trang chi tiết -->
+        <td><a href="{% url 'csv_detail' file.pk %}">{{ file.pk }}</a></td>
+        <td>{{ file.file_path|slice:"9:" }}</td> <!-- Hiển thị tên file -->
+        <td><a href="{{ MEDIA_URL }}{{ file.file_path }}" download>Tải xuống</a></td>
+        <td>{{ file.uploaded_at }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <a href="{% url 'upload_file' %}">Tải lên file mới</a>
+</body>
+</html>

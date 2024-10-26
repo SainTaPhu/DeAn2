@@ -5,6 +5,6 @@ from .models import CSVData
 
 @admin.register(CSVData)
 class CSVDataAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'value')  # Hiển thị các trường bạn muốn trong danh sách
-    search_fields = ('name',)  # Cho phép tìm kiếm theo trường name
+    list_display = ('id', 'file_path',)  # Hiển thị các trường bạn muốn trong danh sách
+    search_fields = ('file_path',)  # Cho phép tìm kiếm theo trường name
 
