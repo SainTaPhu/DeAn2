@@ -24,7 +24,6 @@ Including another URLconf
 # ]
 
 
-
 # # Cap2/urls.py
 # from django.contrib import admin
 # from django.urls import path, include
@@ -37,19 +36,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from Cap2App.views import upload_file_view, csv_list_view, csv_detail_view, home_view, success_page_view
+from Cap2App import views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_view, name='home'),  # Đảm bảo rằng bạn đã định nghĩa home_view
-    path('csv/', csv_list_view, name='csv_list'),
-    path('csv/<int:pk>/', csv_detail_view, name='csv_detail'),
-    path('upload/', upload_file_view, name='upload_file'),  
-    path('success/', success_page_view, name='success_page'),
+    path('', views.home_view, name='home'),  # Đảm bảo rằng bạn đã định nghĩa home_view
+    path('csv/', views.csv_list_view, name='csv_list'),
+    path('csv/<int:pk>/', views.csv_detail_view, name='csv_detail'),
+    path('upload/', views.upload_file_view, name='upload_file'),
+    path('success/', views.success_page_view, name='success_page'),
+    path('download_csv/', views.download_csv, name='download_csv'),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
