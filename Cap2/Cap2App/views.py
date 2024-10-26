@@ -1,3 +1,4 @@
+import csv
 import os
 
 from django.contrib import messages
@@ -25,7 +26,8 @@ def upload_file_view(request):
             with open(csv_file_path, 'wb+') as destination:
                 for chunk in csv_file.chunks():
                     destination.write(chunk)
-
+            # Lưu đường dẫn file vào cơ sở dữ liệu
+            CSVData.objects.create(file_path=f'uploads/{csv_file.name}')
             # Show a success message
             messages.success(request, "Dữ liệu đã được xử lý thành công!")
 
@@ -40,17 +42,28 @@ def upload_file_view(request):
 
 
 def csv_list_view(request):
-    csv_data = CSVData.objects.all()
-    return render(request, 'Cap2App/csv_list.html', {'csv_data': csv_data})
+    csv_files = CSVData.objects.all()
+    return render(request, 'Cap2App/csv_list.html', {'csv_files': csv_files})
 
 
 def csv_detail_view(request, pk):
-    csv_record = CSVData.objects.get(pk=pk)
-    return render(request, 'Cap2App/csv_detail.html', {'csv_record': csv_record})
+    csv_file = get_object_or_404(CSVData, pk=pk)  # Fetch CSV file from DB by primary key
+    file_path = csv_file.file_path  # Path stored in database
+    data = []
+
+    # Open and read the CSV file
+    full_path = os.path.join(settings.MEDIA_ROOT, file_path)
+    with open(full_path, newline='', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            data.append(row)  # Append each row to data
+
+    # Pass CSV content to template
+    return render(request, 'Cap2App/csv_detail.html', {'csv_file': csv_file, 'data': data})
 
 
 # Cap2App/views.py
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 
 
